@@ -22,6 +22,8 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
  */
 public class AWSClientUtils {
 	
+	private static AWSBuilderFactory factory = new AWSBuilderFactory();
+	
 	/**
 	 * Builds the default AmazonS3 client based on your current preference and account settings
 	 * @return AmazonS3 S3Client
@@ -49,7 +51,7 @@ public class AWSClientUtils {
 				
 		AmazonS3ClientBuilder s3Builder = null;
 		try {
-			s3Builder = AmazonS3ClientBuilder.standard();
+			s3Builder = factory.createAmazonS3ClientBuilder();
 		} catch (Exception e) {
 			throw new ContextedRuntimeException("Error creating AWS S3 client", e);
 		}
@@ -77,7 +79,7 @@ public class AWSClientUtils {
 		Validate.notNull("assumedRole can't be null");
 		AWSSecurityTokenServiceClientBuilder stsBuilder = null;
 		try {
-			stsBuilder = AWSSecurityTokenServiceClientBuilder.standard();
+			stsBuilder = factory.createAWSSecurityTokenServiceClientBuilder();
 		} catch (Exception e1) {
 			throw new ContextedRuntimeException("Error creating AWS STS client", e1);
 		}
