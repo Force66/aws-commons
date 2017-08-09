@@ -3,7 +3,6 @@ package org.force66.aws;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.exception.ContextedRuntimeException;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -53,7 +52,7 @@ public class AWSClientUtils {
 		try {
 			s3Builder = factory.createAmazonS3ClientBuilder();
 		} catch (Exception e) {
-			throw new ContextedRuntimeException("Error creating AWS S3 client", e);
+			throw new AWSCommonsException("Error creating AWS S3 client", e);
 		}
 		
 		if (StringUtils.isNotBlank(regionName)) {
@@ -81,14 +80,14 @@ public class AWSClientUtils {
 		try {
 			stsBuilder = factory.createAWSSecurityTokenServiceClientBuilder();
 		} catch (Exception e1) {
-			throw new ContextedRuntimeException("Error creating AWS STS client", e1);
+			throw new AWSCommonsException("Error creating AWS STS client", e1);
 		}
 		
 		AssumeRoleResult requestResult = null;
 		try {
 			requestResult = stsBuilder.build().assumeRole(assumedRole);
 		} catch (Exception e) {
-			throw new ContextedRuntimeException("Error assuming AWS role", e)
+			throw new AWSCommonsException("Error assuming AWS role", e)
 				.addContextValue("assumedRole", ReflectionToStringBuilder.toString(assumedRole));
 		}
 		
