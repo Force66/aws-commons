@@ -9,8 +9,6 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
 import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 
@@ -21,13 +19,13 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
  */
 public class AWSClientUtils {
 	
-	private static AWSBuilderFactory factory = new AWSBuilderFactory();
+	private AWSBuilderFactory factory = new AWSBuilderFactory();
 	
 	/**
 	 * Builds the default AmazonS3 client based on your current preference and account settings
 	 * @return AmazonS3 S3Client
 	 */
-	public static AmazonS3 buildAmazonS3() {
+	public AmazonS3 buildAmazonS3() {
 		return buildAmazonS3(null, null);
 	}
 	
@@ -36,7 +34,7 @@ public class AWSClientUtils {
 	 * @param regionName
 	 * @return AmazonS3 S3Client
 	 */
-	public static AmazonS3 buildAmazonS3(String regionName) {
+	public AmazonS3 buildAmazonS3(String regionName) {
 		return buildAmazonS3(regionName, null);
 	}
 	
@@ -46,9 +44,9 @@ public class AWSClientUtils {
 	 * @param assumedRoleRequest
 	 * @return AmazonS3 S3Client
 	 */
-	public static AmazonS3 buildAmazonS3(String regionName, AssumeRoleRequest assumedRole) {
+	public AmazonS3 buildAmazonS3(String regionName, AssumeRoleRequest assumedRole) {
 				
-		AmazonS3ClientBuilder s3Builder = null;
+		AmazonS3ClientBuilderProxy s3Builder = null;
 		try {
 			s3Builder = factory.createAmazonS3ClientBuilder();
 		} catch (Exception e) {
@@ -67,16 +65,16 @@ public class AWSClientUtils {
 		return s3Builder.build();
 	}
 
-	protected static Regions validateRegionName(String regionName) {
+	protected Regions validateRegionName(String regionName) {
 		Validate.notEmpty(regionName, "Null or blank region name not allowed.");
 		Regions regions = Regions.fromName(regionName);
 		Validate.notNull(regions, "%s is not a valid region name", regionName);
 		return regions;
 	}
 	
-	protected static AWSCredentialsProvider createAssumedRoleCredentials(AssumeRoleRequest assumedRole) {
-		Validate.notNull("assumedRole can't be null");
-		AWSSecurityTokenServiceClientBuilder stsBuilder = null;
+	protected AWSCredentialsProvider createAssumedRoleCredentials(AssumeRoleRequest assumedRole) {
+		Validate.notNull(assumedRole, "assumedRole can't be null");
+		AWSSecurityTokenServiceClientBuilderProxy stsBuilder = null;
 		try {
 			stsBuilder = factory.createAWSSecurityTokenServiceClientBuilder();
 		} catch (Exception e1) {
