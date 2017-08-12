@@ -10,11 +10,12 @@ import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder
  *
  */
 class AWSSecurityTokenServiceClientBuilderProxy {
-	
-	private AWSSecurityTokenServiceClientBuilder builder = AWSSecurityTokenServiceClientBuilder.standard();
-	
-	public AWSSecurityTokenService build() {
-		return builder.build();
-	}
+
+  private AWSSecurityTokenServiceClientBuilder builder =
+      AWSSecurityTokenServiceClientBuilder.standard();
+
+  public AWSSecurityTokenService build() {
+    return builder.build();
+  }
 
 }

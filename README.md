@@ -10,5 +10,7 @@ I commonly see AWS code that isn't injectable. That is, use of the AWS builders 
 This prevents unit testing (running without a network) and generally forces that code to be runnable as integration 
 tests only.
 
+Please feel free to report defects, questions, improvement suggestions. Details on our [contributing](CONTRIBUTING.md) page.
+
 ## AWS Commons Contents
 * `AWSClientUtils`   Mockable utility that creates an ever-growing list of AWS clients for different services.
