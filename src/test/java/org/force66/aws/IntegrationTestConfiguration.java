@@ -19,8 +19,22 @@ public class IntegrationTestConfiguration {
     }
   }
   
+  /**
+   * Returns property value cast as a String.
+   * @param propertyName
+   * @return stringValue
+   */
   public static String getPropertyAsString(String propertyName) {
     return (String)TEST_PROPS.getProperty(propertyName);
+  }
+  
+  /**
+   * Returns property value - no casting
+   * @param propertyName
+   * @return value
+   */
+  public static Object getProperty(String propertyName) {
+    return TEST_PROPS.getProperty(propertyName);
   }
 
 }
