@@ -15,7 +15,9 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
+import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
 import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 import com.amazonaws.services.securitytoken.model.Credentials;
@@ -35,10 +37,10 @@ public class AWSClientUtilsTest {
   private AWSBuilderFactory awsBuilderFactoryMock;
 
   @Mock
-  private AmazonS3ClientBuilderProxy amazonS3ClientBuilderProxyMock;
+  private AmazonClientBuilderProxy amazonS3ClientBuilderProxyMock;
 
   @Mock
-  private AWSSecurityTokenServiceClientBuilderProxy awsSecurityTokenServiceClientBuilderProxyMock;
+  private AmazonClientBuilderProxy awsSecurityTokenServiceClientBuilderProxyMock;
 
   @Mock
   private AmazonS3 amazonS3Mock;
@@ -57,9 +59,9 @@ public class AWSClientUtilsTest {
     awsClientUtils = new AWSClientUtils();
     FieldUtils.writeField(awsClientUtils, "factory", awsBuilderFactoryMock, true);
 
-    Mockito.when(awsBuilderFactoryMock.createAmazonS3ClientBuilder())
+    Mockito.when(awsBuilderFactoryMock.createAmazonClientBuilderProxy(AmazonS3ClientBuilder.class))
         .thenReturn(amazonS3ClientBuilderProxyMock);
-    Mockito.when(awsBuilderFactoryMock.createAWSSecurityTokenServiceClientBuilder())
+    Mockito.when(awsBuilderFactoryMock.createAmazonClientBuilderProxy(AWSSecurityTokenServiceClientBuilder.class))
         .thenReturn(awsSecurityTokenServiceClientBuilderProxyMock);
 
     Mockito.when(amazonS3ClientBuilderProxyMock.withRegion(ArgumentMatchers.any(Regions.class)))
@@ -111,7 +113,7 @@ public class AWSClientUtilsTest {
   @Test
   public void testCreateAssumedRoleCredentials_StsException() throws Exception {
     RuntimeException rExpt = new RuntimeException("crap");
-    Mockito.when(awsBuilderFactoryMock.createAWSSecurityTokenServiceClientBuilder())
+    Mockito.when(awsBuilderFactoryMock.createAmazonClientBuilderProxy(AWSSecurityTokenServiceClientBuilder.class))
         .thenThrow(rExpt);
 
     try {
@@ -145,7 +147,7 @@ public class AWSClientUtilsTest {
 
   @Test(expected = AWSCommonsException.class)
   public void testS3CreateWithException() throws Exception {
-    Mockito.when(awsBuilderFactoryMock.createAmazonS3ClientBuilder())
+    Mockito.when(awsBuilderFactoryMock.createAmazonClientBuilderProxy(AmazonS3ClientBuilder.class))
         .thenThrow(new RuntimeException("crap"));
     awsClientUtils.buildAmazonS3();
   }

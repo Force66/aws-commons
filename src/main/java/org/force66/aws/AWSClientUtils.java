@@ -9,6 +9,9 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
+import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
 import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 
@@ -50,9 +53,9 @@ public class AWSClientUtils {
    */
   public AmazonS3 buildAmazonS3(String regionName, AssumeRoleRequest assumedRole) {
 
-    AmazonS3ClientBuilderProxy s3Builder = null;
+    AmazonClientBuilderProxy s3Builder = null;
     try {
-      s3Builder = factory.createAmazonS3ClientBuilder();
+      s3Builder = factory.createAmazonClientBuilderProxy(AmazonS3ClientBuilder.class);
     } catch (Exception e) {
       throw new AWSCommonsException("Error creating AWS S3 client", e);
     }
@@ -66,7 +69,7 @@ public class AWSClientUtils {
       s3Builder = s3Builder.withCredentials(creds);
     }
 
-    return s3Builder.build();
+    return (AmazonS3)s3Builder.build();
   }
 
   protected Regions validateRegionName(String regionName) {
@@ -78,16 +81,16 @@ public class AWSClientUtils {
 
   protected AWSCredentialsProvider createAssumedRoleCredentials(AssumeRoleRequest assumedRole) {
     Validate.notNull(assumedRole, "assumedRole can't be null");
-    AWSSecurityTokenServiceClientBuilderProxy stsBuilder = null;
+    AmazonClientBuilderProxy stsBuilder = null;
     try {
-      stsBuilder = factory.createAWSSecurityTokenServiceClientBuilder();
+      stsBuilder = factory.createAmazonClientBuilderProxy(AWSSecurityTokenServiceClientBuilder.class);
     } catch (Exception e1) {
       throw new AWSCommonsException("Error creating AWS STS client", e1);
     }
 
     AssumeRoleResult requestResult = null;
     try {
-      requestResult = stsBuilder.build().assumeRole(assumedRole);
+      requestResult = ((AWSSecurityTokenService)stsBuilder.build()).assumeRole(assumedRole);
     } catch (Exception e) {
       throw new AWSCommonsException("Error assuming AWS role", e).addContextValue("assumedRole",
           ReflectionToStringBuilder.toString(assumedRole));
