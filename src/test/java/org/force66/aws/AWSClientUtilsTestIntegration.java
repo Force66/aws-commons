@@ -41,7 +41,7 @@ public class AWSClientUtilsTestIntegration {
   public void testBuildAmazonS3WithRole() throws Exception {
     AssumeRoleRequest assumeRoleRequest = new AssumeRoleRequest();
     assumeRoleRequest.setDurationSeconds(900);
-    assumeRoleRequest.setRoleArn("arn:aws:iam::517214143524:role/S3-Admin-Access");
+    assumeRoleRequest.setRoleArn(IntegrationTestConfiguration.getPropertyAsString(IntegrationTestConfiguration.TEST_ROLE_PROP));
     assumeRoleRequest.setRoleSessionName("demo");
 
     AmazonS3 s3 = awsClientUtils.buildAmazonS3(TEST_REGION, assumeRoleRequest);
