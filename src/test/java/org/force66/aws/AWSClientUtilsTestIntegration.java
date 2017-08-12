@@ -8,6 +8,12 @@ import org.junit.Test;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 
+/**
+ * This test is a full integration test with AWS requires configured 
+ * AWS credentials in order to run.
+ * @author D. Ashmore
+ *
+ */
 public class AWSClientUtilsTestIntegration {
 
 	private static final String TEST_REGION = "us-east-1";
