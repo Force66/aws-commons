@@ -5,10 +5,10 @@ This project has two objectives:
 * Reduce common AWS plumbing code needed to create AWS clients.
 * Make mocking AWS code easier so that it's much easier to unit test.
 
-I commonly see AWS code that isn't injectable. That is, use of the AWS builders (e.g. '''AmazonS3ClientBuilder''', 
-'''AWSSecurityTokenServiceClientBuilderProxy''', etc.) bind code so that it must run with access to AWS to exist.
+I commonly see AWS code that isn't injectable. That is, use of the AWS builders (e.g. `AmazonS3ClientBuilder`, 
+`AWSSecurityTokenServiceClientBuilderProxy`, etc.) bind code so that it must run with access to AWS to exist.
 This prevents unit testing (running without a network) and generally forces that code to be runnable as integration 
 tests only.
 
 ## AWS Commons Contents
-* '''AWSClientUtils'''   Mockable utility that creates an ever-growing list of AWS clients for different services.
+* `AWSClientUtils`   Mockable utility that creates an ever-growing list of AWS clients for different services.
