@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.force66</groupId>
-  <artifactId>aws-commons</artifactId>
-  <version>1.0.0-rc1</version>
-  <name>aws-commons</name>
-  <description>aws-commons</description>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.force66</groupId>
+	<artifactId>aws-commons</artifactId>
+	<version>1.0.0-rc1</version>
+	<name>aws-commons</name>
+	<description>aws-commons</description>
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<aws.sdk.version>1.11.172</aws.sdk.version>
@@ -17,8 +18,8 @@
 		<java.version>1.8</java.version>
 		<mockito.version>2.8.47</mockito.version>
 	</properties>
-  
-  <dependencies>
+
+	<dependencies>
 
 		<!-- Production Dependencies -->
 		<dependency>
@@ -36,6 +37,11 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
 
 
 		<!-- Test Dependencies -->
@@ -51,8 +57,20 @@
 			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.vmlens</groupId>
+			<artifactId>concurrent-junit</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
