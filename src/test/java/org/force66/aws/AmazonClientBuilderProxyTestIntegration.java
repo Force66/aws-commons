@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.apigateway.AmazonApiGatewayClientBuilder;
@@ -89,7 +88,6 @@ import com.amazonaws.services.resourcegroupstaggingapi.AWSResourceGroupsTaggingA
 import com.amazonaws.services.route53.AmazonRoute53ClientBuilder;
 import com.amazonaws.services.route53domains.AmazonRoute53DomainsClientBuilder;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
-import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 import com.amazonaws.services.servermigration.AWSServerMigrationClientBuilder;
 import com.amazonaws.services.servicecatalog.AWSServiceCatalogClientBuilder;
 import com.amazonaws.services.shield.AWSShieldClientBuilder;
